@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <p id="demo">TEST</p>
+
+  <script>
+    
+    let getXMLFile = function(path, callback) {
+      let request = new XMLHttpRequest();
+      request.open ("GET", path);
+      request.setRequestHeader("Content-Type", "text/xml");
+      request.onreadystatechange = function() {
+        if (request.readyState === 4 && request.status === 200) {
+          callback(request.responseXML);
+        }
+      };
+      request.send();
+    };
+
+    getXMLFile("https://raw.githubusercontent.com/ELVANRODRIGUEZ/FACTURAS/master/TEST.xml", function(xml) {
+      console.log(xml);
+    });
+    // getXMLFile("https://www.cs.utexas.edu/~mitra/csFall2018/cs329/lectures/xml/planes.xml.txt", function(xml) {
+    //   console.log(xml);
+    // });
+
+  </script>
+
+</body>
+
+</html>
