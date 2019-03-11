@@ -7,7 +7,7 @@
         <cfdi:ExpedidoEn calle="Lago Zurich" noExterior="245" colonia="Ampiación Granada" localidad="," referencia="EDIF TELCEL" municipio="Miguel Hidalgo" estado="Distrito Federal" pais="México" codigoPostal="11529" />
         <cfdi:RegimenFiscal Regimen="Régimen Opcional para Grupos de Sociedades" />
     </cfdi:Emisor>
-    <cfdi:Receptor rfc="LORE810928G76" nombre="LOPEZ RODRIGUEZ ELVAN">
+    <cfdi:Receptor rfc="LORE810928G76" nombre="LOPEZ RODRIGUEZ ELVAN">ASDF
         <cfdi:Domicilio calle="FILIPINAS" colonia="PORTALES" localidad="." referencia="1216" municipio="BENITO JUAREZ" estado="Distrito Federal" pais="México" codigoPostal="03300" />
     </cfdi:Receptor>
     <cfdi:Conceptos>
