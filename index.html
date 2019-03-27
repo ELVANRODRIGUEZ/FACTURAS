@@ -1,43 +1,206 @@
-      <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Bujumbura Data</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
 </head>
 
 <body>
-  <!-- Retrieved data will be dumped here -->
-  <div class="city"></div>
-  <div class="wind"></div>
-  <div class="humidity"></div>
-  <div class="temp"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    // Things to accomplish:
-    // Get an API Key from OpenWeatherMap API
-    var cityID = "1850147"
-    var appid = "b3545de5f4ead38172ca8ba7793743a1"
-    var queryURL = "TEST.txt"
-    // Create an AJAX call to retrieve data Log the data in console
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(response){
-      xmlresponse = $.parseXML(response);
-      console.log(xmlresponse);
-      // $(".city").html("<h1>Tokyo City. (City Id: " + cityID + ")</h1>");
-      // $(".wind").html("<h2 style='text-indent: 20px'>Wind conditions:</h2>");
-      // $(".wind").append("<h3 style='text-indent: 70px'>" + "    Speed: " + parseFloat(response.wind.speed).toFixed(2) + "km/h</h3>");
-      // $(".wind").append("<h3 style='text-indent: 70px'>" + "    Wind Direction: " + (parseFloat(response.wind.deg)).toFixed(2) + "°</h3>");
-      // $(".humidity").html("<h2 style='text-indent: 20px'>Humidity: " + parseFloat(response.main.humidity).toFixed(2) +"%</h2>");
-      // $(".temp").html("<h2 style='text-indent: 20px'>Temperature: " + (parseFloat(response.main.temp) - 273.15).toFixed(2)  +"°C</h2>");
-      
-    });
-    // Log the data in HTML
-    // Scream Ushindi (victory in Swahili)! at the top of your lungs
-  </script>
+
+  <input type="file" name="selectedFile" id="pickedFile"><br>
+  <div id="dataHolder">
+
+  </div>
 
 </body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  // ===================================================================== XMLAPI and DOMParser
+
+  function grabElements() {
+
+    dataArea = document.getElementById("dataHolder");
+    var files = document.getElementById("pickedFile");
+    files.addEventListener("change", process, false);
+
+  };
+
+  function process(element) {
+
+    var files = element.target.files;
+    var pickedFile = files[0];
+    var Reader = new FileReader();
+
+    Reader.readAsText(pickedFile);
+
+    Reader.addEventListener("load", broadcast, false);
+
+  };
+
+  function broadcast(element) {
+    var response = element.target.result;
+
+    var parser = new DOMParser();
+    var xmlDoc2 = parser.parseFromString(response, "text/xml");
+
+    console.log(xmlDoc2);
+
+    tagEmisor = xmlDoc2.getElementsByTagName("cfdi:Emisor")[0];
+    if (tagEmisor != undefined) {
+      rfcEmisor = tagEmisor.getAttribute("rfc");
+      console.log(rfcEmisor);
+      nombreEmisor = tagEmisor.getAttribute("nombre");
+      console.log(nombreEmisor);
+      $("#dataHolder").append("<br><b>RFC:</b> " + rfcEmisor + "<br><br>");
+      $("#dataHolder").append("<b>RAZÓN SOCIAL:</b> " + nombreEmisor + "<br><br>");
+    }
+
+
+
+    tagTimbre = xmlDoc2.getElementsByTagName("tfd:TimbreFiscalDigital")[0];
+    if (tagTimbre != undefined) {
+      claveCFDI = tagTimbre.getAttribute("UUID");
+      console.log(claveCFDI);
+      $("#dataHolder").append("<b>CLAVE CFDI:</b> " + claveCFDI + "<br><br>");
+    }
+
+
+
+    tagComprobante = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
+    if (tagComprobante != undefined) {
+      subtotalComprobante = tagComprobante.getAttribute("subTotal");
+      console.log(subtotalComprobante);
+      totalComprobante = tagComprobante.getAttribute("total");
+      console.log(totalComprobante);
+      metodoPagoComprobante = tagComprobante.getAttribute("metodoDePago");
+      console.log(metodoPagoComprobante);
+      formaPagoComprobante = tagComprobante.getAttribute("formaDePago");
+      console.log(formaPagoComprobante);
+      $("#dataHolder").append("<b>SUBTOTAL:</b> " + subtotalComprobante + "<br><br>");
+      $("#dataHolder").append("<b>TOTAL:</b> " + totalComprobante + "<br><br>");
+      $("#dataHolder").append("<b>MÉTODO DE PAGO:</b> " + metodoPagoComprobante + "<br><br>");
+      $("#dataHolder").append("<b>FORMA DE PAGO:</b> " + formaPagoComprobante + "<br><br>");
+    }
+
+
+
+    tagImpuestos = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[0];
+    if (tagImpuestos != undefined) {
+      totalImpTrasImpuestos = tagImpuestos.getAttribute("totalImpuestosTrasladados");
+      console.log(totalImpTrasImpuestos);
+      $("#dataHolder").append("<b>TOTAL DE IMPUESTOS TRASLADADOS:</b> " + totalImpTrasImpuestos + "<br><br>");
+    }
+
+
+
+    tagImpuestosTraslado = xmlDoc2.getElementsByTagName("cfdi:Traslado")[0];
+    if (tagImpuestosTraslado != undefined) {
+      console.log("I am here!");
+      tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("impuesto");
+      console.log(tipoImpIpuestosTraslado);
+      impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("importe");
+      console.log(">>" + impoIpuestosTraslado);
+      $("#dataHolder").append("<b>IVA:</b> " + impoIpuestosTraslado + "<br><br>");
+    }
+
+  }
+
+  // To load the first of the functions once the window is loaded.
+
+  window.addEventListener("load", grabElements, false);
+
+  // ===================================================================== JSON like method (NOT WORKING)
+
+  // queryURL = "TEST.txt";
+  // $.ajax({
+  //   url: 'file:///C:/Users/ELVAN/Documents/PERSONAL/CONTABILIDAD/FACTURA_APP/TEST3.xml',
+  //   method: "GET"
+  // }).then(function (response) {
+  //   xmlresponse = $.parseXML(response);
+  //   console.log(xmlresponse);
+
+  // });
+
+  // ===================================================================== XMLHttp Request and DOMParser (WORKING BUT IN SECURE MODE)
+
+  // Chrome must be opened with: chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security from the Run window.
+
+  // var parser, xmlDoc, xmlDoc2, request, uurloon, uurloon1, uurloon2;
+
+  // let getXMLFile = function (path, callback) {
+  //   request = new XMLHttpRequest();
+  //   request.open("GET", path);
+  //   // request.setRequestHeader("text/xml",tex);
+  //   request.onreadystatechange = function () {
+
+  //     callback(request.responseText);
+
+  //   };
+  //   request.send();
+
+  // };
+
+  // getXMLFile("TEST.xml", function (xmlDoc) {
+
+  //   parser = new DOMParser();
+  //   xmlDoc2 = parser.parseFromString(xmlDoc, "text/xml");
+
+  //   console.log(xmlDoc2);
+  //   uurloon = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
+
+  //   WriteToHTML();
+  // });
+
+  // function WriteToHTML() {
+  //   uurloon1 = uurloon.getAttribute("subTotal");
+  //   document.getElementById("demo1").innerHTML = uurloon1;
+  //   uurloon2 = uurloon.getAttribute("total");
+  //   document.getElementById("demo2").innerHTML = uurloon2;
+  //   console.log(uurloon1);
+  //   console.log(uurloon2);
+  // };
+
+  // ===================================================================== XMLHttp Request (WORKING BUT IN SECURE MODE)
+
+
+  // var xhr = new XMLHttpRequest();
+
+  // xhr.open("GET", "file:///C:/Users/ELVAN/Documents/PERSONAL/CONTABILIDAD/FACTURA_APP/TEST3.xml", true);
+
+  // xhr.send();
+
+  // xhr.onreadystatechange = function() {
+  //   console.log(xhr.readyState);
+  //   console.log(xhr.status);
+  //   console.log(xhr.statusText);
+  // }
+
+  // ===================================================================== XMLHttp Request (WORKING BUT IN SECURE MODE)
+
+  // var xhr = new XMLHttpRequest();
+  // xhr.open('GET', 'TEST.xml', true);
+
+  // xhr.timeout = 2000; // time in milliseconds
+
+  // xhr.onload = function () {
+  //   // Request finished. Do processing here.
+  //   var xmlDoc = this.responseXML; // <- Here's your XML file
+  //   console.log(xmlDoc);
+
+  // };
+
+  // xhr.ontimeout = function (e) {
+  //   // XMLHttpRequest timed out. Do something here.
+  // };
+
+  // xhr.send(null);
+
+</script>
 
 </html>
