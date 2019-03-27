@@ -1,31 +1,41 @@
-<!DOCTYPE html>
-<html>
+      <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bujumbura Data</title>
+</head>
 
 <body>
-
-  <p id="demo">TEST</p>
-
-  <script>
-    
-    let getXMLFile = function(path, callback) {
-      let request = new XMLHttpRequest();
-      request.open ("GET", path);
-      request.setRequestHeader("Content-Type", "text/xml");
-      request.onreadystatechange = function() {
-        if (request.readyState === 4 && request.status === 200) {
-          callback(request.responseXML);
-        }
-      };
-      request.send();
-    };
-
-    getXMLFile("TEST.xml", function(xml) {
-      console.log(xml);
+  <!-- Retrieved data will be dumped here -->
+  <div class="city"></div>
+  <div class="wind"></div>
+  <div class="humidity"></div>
+  <div class="temp"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // Things to accomplish:
+    // Get an API Key from OpenWeatherMap API
+    var cityID = "1850147"
+    var appid = "b3545de5f4ead38172ca8ba7793743a1"
+    var queryURL = "TEST.txt"
+    // Create an AJAX call to retrieve data Log the data in console
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response){
+      xmlresponse = $.parseXML(response);
+      console.log(xmlresponse);
+      // $(".city").html("<h1>Tokyo City. (City Id: " + cityID + ")</h1>");
+      // $(".wind").html("<h2 style='text-indent: 20px'>Wind conditions:</h2>");
+      // $(".wind").append("<h3 style='text-indent: 70px'>" + "    Speed: " + parseFloat(response.wind.speed).toFixed(2) + "km/h</h3>");
+      // $(".wind").append("<h3 style='text-indent: 70px'>" + "    Wind Direction: " + (parseFloat(response.wind.deg)).toFixed(2) + "°</h3>");
+      // $(".humidity").html("<h2 style='text-indent: 20px'>Humidity: " + parseFloat(response.main.humidity).toFixed(2) +"%</h2>");
+      // $(".temp").html("<h2 style='text-indent: 20px'>Temperature: " + (parseFloat(response.main.temp) - 273.15).toFixed(2)  +"°C</h2>");
+      
     });
-    // getXMLFile("https://www.cs.utexas.edu/~mitra/csFall2018/cs329/lectures/xml/planes.xml.txt", function(xml) {
-    //   console.log(xml);
-    // });
-
+    // Log the data in HTML
+    // Scream Ushindi (victory in Swahili)! at the top of your lungs
   </script>
 
 </body>
