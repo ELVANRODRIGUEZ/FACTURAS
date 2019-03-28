@@ -33,34 +33,58 @@
 
   function process(element) {
 
+    // Assign "files" the selected file in the input file selector.
     var files = element.target.files;
+    // Since "element.target.files" returns an array, we will choose the firs one of its elements.
     var pickedFile = files[0];
+    // The "FileReader" type assigned to a variable creates the object for subsequent usage.
     var Reader = new FileReader();
 
+    // Once created, the "FileReader" object named "Reader" will read "as text" whatever file was chosen.
     Reader.readAsText(pickedFile);
 
+    // We'll add an event listener for "load" action to the Reader object to call the "broadcast" function.
     Reader.addEventListener("load", broadcast, false);
 
   };
 
   function broadcast(element) {
+
+    // By passing the argument "element" (this name could be any name) to the function, we are capturing the element that called this function, which was the "Reader object" created in the "process" function. Then we can retrieve its properties and methods. In this case, we are assigning the "Reader objet" read as text file to the variable "response".
     var response = element.target.result;
 
+    // Creating a new "DOMParser" object by assigning the "DOMParser" type to a variable.
     var parser = new DOMParser();
+    // Assign the parsed result, which swaped the text content of "response" for an XML structured object.
     var xmlDoc2 = parser.parseFromString(response, "text/xml");
 
     console.log(xmlDoc2);
 
+    // We'll search for the "cfdi:Emisor" through the "getElementsByTagName" method which retrieves an array, so we will take the first one of its elements.
     tagEmisor = xmlDoc2.getElementsByTagName("cfdi:Emisor")[0];
+    // The following searches will take place only if there actually was a "cfdi:Emisor" tag. If there was, the following attributes will be searches within it.
     if (tagEmisor != undefined) {
-      rfcEmisor = tagEmisor.getAttribute("rfc");
+
+      // This if checks the spelling for the "RFC" attribute. Former invoices had a different sepelling from what they have today.
+      if (tagEmisor.getAttribute("rfc") != undefined) {
+        rfcEmisor = tagEmisor.getAttribute("rfc");
+      } else {
+        rfcEmisor = tagEmisor.getAttribute("Rfc");
+      };
+      // This if checks the spelling for the "NOMBRE" attribute. Former invoices had a different sepelling from what they have today.
+      if (tagEmisor.getAttribute("nombre") != undefined) {
+        nombreEmisor = tagEmisor.getAttribute("nombre");
+      } else {
+        nombreEmisor = tagEmisor.getAttribute("Nombre");
+      };
+
       console.log(rfcEmisor);
-      nombreEmisor = tagEmisor.getAttribute("nombre");
       console.log(nombreEmisor);
+
+      // RFC and NAME data will be shown appended on the "dataHolder" div.
       $("#dataHolder").append("<br><b>RFC:</b> " + rfcEmisor + "<br><br>");
       $("#dataHolder").append("<b>RAZÓN SOCIAL:</b> " + nombreEmisor + "<br><br>");
-    }
-
+    };
 
 
     tagTimbre = xmlDoc2.getElementsByTagName("tfd:TimbreFiscalDigital")[0];
@@ -74,14 +98,33 @@
 
     tagComprobante = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
     if (tagComprobante != undefined) {
-      subtotalComprobante = tagComprobante.getAttribute("subTotal");
+
+      if (tagComprobante.getAttribute("subTotal") != undefined) {
+        subtotalComprobante = tagComprobante.getAttribute("subTotal");
+      } else {
+        subtotalComprobante = tagComprobante.getAttribute("SubTotal");
+      };
+      if (tagComprobante.getAttribute("total") != undefined) {
+        totalComprobante = tagComprobante.getAttribute("total");
+      } else {
+        totalComprobante = tagComprobante.getAttribute("Total");
+      };
+      if (tagComprobante.getAttribute("metodoDePago") != undefined) {
+        metodoPagoComprobante = tagComprobante.getAttribute("metodoDePago");
+      } else {
+        metodoPagoComprobante = tagComprobante.getAttribute("MetodoPago");
+      };
+      if (tagComprobante.getAttribute("formaDePago") != undefined) {
+        formaPagoComprobante = tagComprobante.getAttribute("formaDePago");
+      } else {
+        formaPagoComprobante = tagComprobante.getAttribute("FormaPago");
+      };
+
       console.log(subtotalComprobante);
-      totalComprobante = tagComprobante.getAttribute("total");
       console.log(totalComprobante);
-      metodoPagoComprobante = tagComprobante.getAttribute("metodoDePago");
       console.log(metodoPagoComprobante);
-      formaPagoComprobante = tagComprobante.getAttribute("formaDePago");
       console.log(formaPagoComprobante);
+
       $("#dataHolder").append("<b>SUBTOTAL:</b> " + subtotalComprobante + "<br><br>");
       $("#dataHolder").append("<b>TOTAL:</b> " + totalComprobante + "<br><br>");
       $("#dataHolder").append("<b>MÉTODO DE PAGO:</b> " + metodoPagoComprobante + "<br><br>");
@@ -89,25 +132,45 @@
     }
 
 
-
-    tagImpuestos = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[0];
+    tagImpuestos = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[xmlDoc2.getElementsByTagName("cfdi:Impuestos")
+      .length - 1];
     if (tagImpuestos != undefined) {
-      totalImpTrasImpuestos = tagImpuestos.getAttribute("totalImpuestosTrasladados");
+
+      if (tagImpuestos.getAttribute("totalImpuestosTrasladados") != undefined) {
+        totalImpTrasImpuestos = tagImpuestos.getAttribute("totalImpuestosTrasladados");
+      } else {
+        totalImpTrasImpuestos = tagImpuestos.getAttribute("TotalImpuestosTrasladados");
+      };
+
       console.log(totalImpTrasImpuestos);
+
       $("#dataHolder").append("<b>TOTAL DE IMPUESTOS TRASLADADOS:</b> " + totalImpTrasImpuestos + "<br><br>");
     }
 
 
+    // for (var i = 0; i < xmlDoc2.getElementsByTagName("cfdi:Traslado").length; i++) {
 
-    tagImpuestosTraslado = xmlDoc2.getElementsByTagName("cfdi:Traslado")[0];
-    if (tagImpuestosTraslado != undefined) {
-      console.log("I am here!");
-      tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("impuesto");
-      console.log(tipoImpIpuestosTraslado);
-      impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("importe");
-      console.log(">>" + impoIpuestosTraslado);
-      $("#dataHolder").append("<b>IVA:</b> " + impoIpuestosTraslado + "<br><br>");
-    }
+    //   tagImpuestosTraslado = xmlDoc2.getElementsByTagName("cfdi:Traslado")[i];
+    //   if (tagImpuestosTraslado != undefined) {
+
+    //     if (tagImpuestosTraslado.getAttribute("impuesto") != undefined) {
+    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("impuesto");
+    //     } else {
+    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("Impuesto");
+    //     };
+    //     if (tagImpuestosTraslado.getAttribute("importe") != undefined) {
+    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("importe");
+    //     } else {
+    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("Importe");
+    //     };
+
+    //     console.log(tipoImpIpuestosTraslado);
+    //     console.log(">>" + impoIpuestosTraslado);
+
+    //     $("#dataHolder").append("<b>IMPUESTO TIPO (" + tipoImpIpuestosTraslado +"):</b> " + impoIpuestosTraslado + "<br><br>");
+    //   }
+
+    // }
 
   }
 
@@ -200,7 +263,6 @@
   // };
 
   // xhr.send(null);
-
 </script>
 
 </html>
