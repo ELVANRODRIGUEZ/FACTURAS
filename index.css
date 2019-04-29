@@ -1,0 +1,159 @@
+/* ============================== GENERAL */
+
+html,
+body {
+    /* zoom: 100vw; */
+    width: 100%;
+    min-width: 320px;
+    min-height: 100vh;
+
+}
+
+.container {
+    height: 100%;
+    padding: 15px;
+    max-width: 100%;
+}
+
+h3 {
+    margin: 0;
+}
+
+a {
+    font-size: 14pt;
+}
+
+a:visited {
+    color: white;
+}
+
+.card-header {
+    background-color: #343a40;
+    color: #fff;
+    border: 1px solid #343a40;
+}
+
+
+/* ============================== JUMBOTRON */
+
+.jumbotron {
+    margin-bottom: 0px;
+    padding: 25px 10px;
+
+}
+
+
+/* ============================== TABLE */
+
+.row {  
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.tableDiv {
+    overflow: auto;
+    font-size: 9pt;
+    margin: 15px 6px;
+    padding: 0px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    max-height: 50vh;
+}
+
+#categoría, #detalle, #conceptoGeneral {
+    min-width: 180px;
+}
+
+#deducible, #periodoGeductibilidad, #bienesServicios, #seTieneFactura {
+    min-width: 110px;
+}
+
+#proveedor {
+    min-width: 250px;
+}
+
+#RFC {
+    min-width: 120px;
+}
+
+#fecha {
+    min-width: 100px;
+}
+
+#folioFiscal {
+    min-width: 250px;
+}
+
+#máximoDeducible, #total, #IVA, #impuestosTrasladados, #montoBaseIVA, #montoSinIVA, #montoAntesImpuestos, #montoIVA0, #otrosImpuestos, #montoMaximoBaseIVA, #montoMaximoSinIVA, #IVAmáximoTrasladado, #TotalMáximo {
+    min-width: 100px;
+}
+
+#MétodoPago {
+    min-width: 150px;
+}
+
+#Notas {
+    min-width: 180px;
+}
+
+.table thead, .table th {
+    padding: 5px;
+    border: 1px solid #c2c2c2;
+    background-color: rgba(0,0,0,.03);
+}
+
+.table td {
+    border-left: 1px solid #f3f3f3; 
+    border-bottom: 1px solid #f3f3f3; 
+}
+
+td.selector {
+    min-width: 70px;
+    font-size: 8pt;
+    word-break: break-all;
+}
+
+
+/* ============================== MODAL */
+
+.caution {
+    background-color: red;
+}
+
+
+/* ============================== WEEK DAYS CONTAINER */
+
+.weekDaysContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    background-color: black;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+.days-col {
+    display: inline-block;
+    width: 14.28%;
+    min-width: 60px;
+    padding: 2px;
+    margin-bottom: 0;
+}
+
+.domingo {
+    align-self: flex-end;
+}
+
+.weekHours {
+    padding: 4px;
+    font-size: 14px;
+}
+
+
+/* ============================== SUBMIT */
+
+.btn {
+    margin-left: 50%;
+    transform: translateX(-50%);
+}

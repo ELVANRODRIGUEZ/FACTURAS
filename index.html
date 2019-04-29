@@ -2,267 +2,117 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>ListaRayas</title>
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Link to BOOTSTRAP. -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Optional Bootstrap JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+
+  <!-- Metatag to start setting resposiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <!-- link to CSS. -->
+  <link rel="stylesheet" href="index.css">
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+  <!-- Moment.js Reference -->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+  <!-- Numberal.js Reference -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 </head>
 
 <body>
 
-  <input type="file" name="selectedFile" multiple="multiple" id="pickedFile"><br>
-  <div id="dataHolder">
+  <!-- ==================================================== JUMBOTRON -->
 
+  <div class="jumbotron jumbotron-fluid bg-dark text-light">
+    <h3 id="mainHeader" class="text-center">PROGRAMA LECTOR DE FACTURAS XML</h3>
   </div>
 
+
+  <div class="container">
+
+    <!-- ==================================================== TABLE TITLE -->
+
+    <div id="tableRow" class="row">
+      <div class="col-lg-12">
+        <div class="card card-default">
+          <div class="card-header">
+            <h5>DESCRIPCIÓN DE FACTURAS</h5>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="pickedFile" aria-describedby="inputGroupFileAddon01"
+                  multiple="multiple">
+                <label class="custom-file-label" for="pickedFile">Seleccionar archivo(s)</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================== TABLE -->
+
+          <div class="card-body tableDiv">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th id="categoría" scope="col">Categoría</th>
+                  <th id="detalle" scope="col">Detalle</th>
+                  <th id="conceptoGeneral" scope="col">Concepto general</th>
+                  <th id="deducible" scope="col">Deducible</th>
+                  <th id="periodoGeductibilidad" scope="col">Periodo de deductibilidad</th>
+                  <th id="bienesServicios" scope="col">De bienes o servicios</th>
+                  <th id="seTieneFactura" scope="col">Se tiene factura original</th>
+                  <th id="proveedor" scope="col">Proveedor</th>
+                  <th id="RFC" scope="col">RFC</th>
+                  <th id="fecha" scope="col">Fecha</th>
+                  <th id="folioFiscal" scope="col">Folio fiscal</th>
+                  <th id="máximoDeducible" scope="col">% Máximo deducible</th>
+                  <th id="total" scope="col">Total</th>
+                  <th id="IVA" scope="col">IVA</th>
+                  <th id="impuestosTrasladados" scope="col">Impuestos totales trasladados</th>
+                  <th id="montoBaseIVA" scope="col">Monto base de IVA</th>
+                  <th id="montoSinIVA" scope="col">Monto sin IVA</th>
+                  <th id="montoAntesImpuestos" scope="col">Monto antes de Impuestos</th>
+                  <th id="montoIVA0" scope="col">Monto IVA 0%</th>
+                  <th id="otrosImpuestos" scope="col">Otros impuestos</th>
+                  <th id="montoMaximoBaseIVA" scope="col">Monto máximo base de IVA </th>
+                  <th id="montoMaximoSinIVA" scope="col">Monto máximo sin IVA</th>
+                  <th id="IVAmáximoTrasladado" scope="col">IVA máximo trasladado</th>
+                  <th id="TotalMáximo" scope="col">Total máximo</th>
+                  <th id="MétodoPago" scope="col">Método de pago</th>
+                  <th id="Notas" scope="col">Notas</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
-
+<!-- Robust JQuery version -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-  // ===================================================================== XMLAPI and DOMParser
-
-  function grabElements() {
-
-    dataArea = document.getElementById("dataHolder");
-    var files = document.getElementById("pickedFile");
-    files.addEventListener("change", process, false);
-
-  };
-
-  function process(element) {
-
-    // Assign "files" the selected file in the input file selector.
-    var files = element.target.files;
-    // Since "element.target.files" returns an array, we will choose the firs one of its elements.
-    var pickedFile = files[0];
-    // The "FileReader" type assigned to a variable creates the object for subsequent usage.
-    var Reader = new FileReader();
-
-    // Once created, the "FileReader" object named "Reader" will read "as text" whatever file was chosen.
-    Reader.readAsText(pickedFile);
-
-    // We'll add an event listener for "load" action to the Reader object to call the "broadcast" function.
-    Reader.addEventListener("load", broadcast, false);
-
-  };
-
-  function broadcast(element) {
-
-    // By passing the argument "element" (this name could be any name) to the function, we are capturing the element that called this function, which was the "Reader object" created in the "process" function. Then we can retrieve its properties and methods. In this case, we are assigning the "Reader objet" read as text file to the variable "response".
-    var response = element.target.result;
-
-    // Creating a new "DOMParser" object by assigning the "DOMParser" type to a variable.
-    var parser = new DOMParser();
-    // Assign the parsed result, which swaped the text content of "response" for an XML structured object.
-    var xmlDoc2 = parser.parseFromString(response, "text/xml");
-
-    console.log(xmlDoc2);
-
-    // We'll search for the "cfdi:Emisor" through the "getElementsByTagName" method which retrieves an array, so we will take the first one of its elements.
-    tagEmisor = xmlDoc2.getElementsByTagName("cfdi:Emisor")[0];
-    // The following searches will take place only if there actually was a "cfdi:Emisor" tag. If there was, the following attributes will be searches within it.
-    if (tagEmisor != undefined) {
-
-      // This if checks the spelling for the "RFC" attribute. Former invoices had a different sepelling from what they have today.
-      if (tagEmisor.getAttribute("rfc") != undefined) {
-        rfcEmisor = tagEmisor.getAttribute("rfc");
-      } else {
-        rfcEmisor = tagEmisor.getAttribute("Rfc");
-      };
-      // This if checks the spelling for the "NOMBRE" attribute. Former invoices had a different sepelling from what they have today.
-      if (tagEmisor.getAttribute("nombre") != undefined) {
-        nombreEmisor = tagEmisor.getAttribute("nombre");
-      } else {
-        nombreEmisor = tagEmisor.getAttribute("Nombre");
-      };
-
-      console.log(rfcEmisor);
-      console.log(nombreEmisor);
-
-      // RFC and NAME data will be shown appended on the "dataHolder" div.
-      $("#dataHolder").append("<br><b>RFC:</b> " + rfcEmisor + "<br><br>");
-      $("#dataHolder").append("<b>RAZÓN SOCIAL:</b> " + nombreEmisor + "<br><br>");
-    };
-
-
-    tagTimbre = xmlDoc2.getElementsByTagName("tfd:TimbreFiscalDigital")[0];
-    if (tagTimbre != undefined) {
-      claveCFDI = tagTimbre.getAttribute("UUID");
-      console.log(claveCFDI);
-      $("#dataHolder").append("<b>CLAVE CFDI:</b> " + claveCFDI + "<br><br>");
-    }
-
-
-
-    tagComprobante = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
-    if (tagComprobante != undefined) {
-
-      if (tagComprobante.getAttribute("subTotal") != undefined) {
-        subtotalComprobante = tagComprobante.getAttribute("subTotal");
-      } else {
-        subtotalComprobante = tagComprobante.getAttribute("SubTotal");
-      };
-      if (tagComprobante.getAttribute("total") != undefined) {
-        totalComprobante = tagComprobante.getAttribute("total");
-      } else {
-        totalComprobante = tagComprobante.getAttribute("Total");
-      };
-      if (tagComprobante.getAttribute("metodoDePago") != undefined) {
-        metodoPagoComprobante = tagComprobante.getAttribute("metodoDePago");
-      } else {
-        metodoPagoComprobante = tagComprobante.getAttribute("MetodoPago");
-      };
-      if (tagComprobante.getAttribute("formaDePago") != undefined) {
-        formaPagoComprobante = tagComprobante.getAttribute("formaDePago");
-      } else {
-        formaPagoComprobante = tagComprobante.getAttribute("FormaPago");
-      };
-
-      console.log(subtotalComprobante);
-      console.log(totalComprobante);
-      console.log(metodoPagoComprobante);
-      console.log(formaPagoComprobante);
-
-      $("#dataHolder").append("<b>SUBTOTAL:</b> " + subtotalComprobante + "<br><br>");
-      $("#dataHolder").append("<b>TOTAL:</b> " + totalComprobante + "<br><br>");
-      $("#dataHolder").append("<b>MÉTODO DE PAGO:</b> " + metodoPagoComprobante + "<br><br>");
-      $("#dataHolder").append("<b>FORMA DE PAGO:</b> " + formaPagoComprobante + "<br><br>");
-    }
-
-
-    tagImpuestos = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[xmlDoc2.getElementsByTagName("cfdi:Impuestos")
-      .length - 1];
-    if (tagImpuestos != undefined) {
-
-      if (tagImpuestos.getAttribute("totalImpuestosTrasladados") != undefined) {
-        totalImpTrasImpuestos = tagImpuestos.getAttribute("totalImpuestosTrasladados");
-      } else {
-        totalImpTrasImpuestos = tagImpuestos.getAttribute("TotalImpuestosTrasladados");
-      };
-
-      console.log(totalImpTrasImpuestos);
-
-      $("#dataHolder").append("<b>TOTAL DE IMPUESTOS TRASLADADOS:</b> " + totalImpTrasImpuestos + "<br><br>");
-    }
-
-
-    // for (var i = 0; i < xmlDoc2.getElementsByTagName("cfdi:Traslado").length; i++) {
-
-    //   tagImpuestosTraslado = xmlDoc2.getElementsByTagName("cfdi:Traslado")[i];
-    //   if (tagImpuestosTraslado != undefined) {
-
-    //     if (tagImpuestosTraslado.getAttribute("impuesto") != undefined) {
-    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("impuesto");
-    //     } else {
-    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("Impuesto");
-    //     };
-    //     if (tagImpuestosTraslado.getAttribute("importe") != undefined) {
-    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("importe");
-    //     } else {
-    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("Importe");
-    //     };
-
-    //     console.log(tipoImpIpuestosTraslado);
-    //     console.log(">>" + impoIpuestosTraslado);
-
-    //     $("#dataHolder").append("<b>IMPUESTO TIPO (" + tipoImpIpuestosTraslado +"):</b> " + impoIpuestosTraslado + "<br><br>");
-    //   }
-
-    // }
-
-  }
-
-  // To load the first of the functions once the window is loaded.
-
-  window.addEventListener("load", grabElements, false);
-
-  // ===================================================================== JSON like method (NOT WORKING)
-
-  // queryURL = "TEST.txt";
-  // $.ajax({
-  //   url: 'file:///C:/Users/ELVAN/Documents/PERSONAL/CONTABILIDAD/FACTURA_APP/TEST3.xml',
-  //   method: "GET"
-  // }).then(function (response) {
-  //   xmlresponse = $.parseXML(response);
-  //   console.log(xmlresponse);
-
-  // });
-
-  // ===================================================================== XMLHttp Request and DOMParser (WORKING BUT IN SECURE MODE)
-
-  // Chrome must be opened with: chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security from the Run window.
-
-  // var parser, xmlDoc, xmlDoc2, request, uurloon, uurloon1, uurloon2;
-
-  // let getXMLFile = function (path, callback) {
-  //   request = new XMLHttpRequest();
-  //   request.open("GET", path);
-  //   // request.setRequestHeader("text/xml",tex);
-  //   request.onreadystatechange = function () {
-
-  //     callback(request.responseText);
-
-  //   };
-  //   request.send();
-
-  // };
-
-  // getXMLFile("TEST.xml", function (xmlDoc) {
-
-  //   parser = new DOMParser();
-  //   xmlDoc2 = parser.parseFromString(xmlDoc, "text/xml");
-
-  //   console.log(xmlDoc2);
-  //   uurloon = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
-
-  //   WriteToHTML();
-  // });
-
-  // function WriteToHTML() {
-  //   uurloon1 = uurloon.getAttribute("subTotal");
-  //   document.getElementById("demo1").innerHTML = uurloon1;
-  //   uurloon2 = uurloon.getAttribute("total");
-  //   document.getElementById("demo2").innerHTML = uurloon2;
-  //   console.log(uurloon1);
-  //   console.log(uurloon2);
-  // };
-
-  // ===================================================================== XMLHttp Request (WORKING BUT IN SECURE MODE)
-
-
-  // var xhr = new XMLHttpRequest();
-
-  // xhr.open("GET", "file:///C:/Users/ELVAN/Documents/PERSONAL/CONTABILIDAD/FACTURA_APP/TEST3.xml", true);
-
-  // xhr.send();
-
-  // xhr.onreadystatechange = function() {
-  //   console.log(xhr.readyState);
-  //   console.log(xhr.status);
-  //   console.log(xhr.statusText);
-  // }
-
-  // ===================================================================== XMLHttp Request (WORKING BUT IN SECURE MODE)
-
-  // var xhr = new XMLHttpRequest();
-  // xhr.open('GET', 'TEST.xml', true);
-
-  // xhr.timeout = 2000; // time in milliseconds
-
-  // xhr.onload = function () {
-  //   // Request finished. Do processing here.
-  //   var xmlDoc = this.responseXML; // <- Here's your XML file
-  //   console.log(xmlDoc);
-
-  // };
-
-  // xhr.ontimeout = function (e) {
-  //   // XMLHttpRequest timed out. Do something here.
-  // };
-
-  // xhr.send(null);
-</script>
+<!-- Link to Javascript file -->
+<script type="text/javascript" src="javascript.js"></script>
 
 </html>
