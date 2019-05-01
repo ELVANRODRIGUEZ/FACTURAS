@@ -45,6 +45,7 @@ function findXMLElements(element) {
     var claveCFDI;
     var subtotalComprobante;
     var totalComprobante;
+    var totalIVA;
     var metodoPagoComprobante;
     var formaPagoComprobante;
     var totalImpTrasImpuestos;
@@ -77,13 +78,13 @@ function findXMLElements(element) {
 
     tagComprobante = xmlDoc2.getElementsByTagName("cfdi:Comprobante")[0];
     if (tagComprobante != undefined) {
-        
+
         if (tagComprobante.getAttribute("Fecha") != undefined) {
             fecha = tagComprobante.getAttribute("Fecha");
         } else {
             fecha = tagComprobante.getAttribute("fecha");
         };
-    
+
         if (tagComprobante.getAttribute("subTotal") != undefined) {
             subtotalComprobante = tagComprobante.getAttribute("subTotal");
         } else {
@@ -115,43 +116,67 @@ function findXMLElements(element) {
     }
 
 
-    tagImpuestos = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[xmlDoc2.getElementsByTagName("cfdi:Impuestos")
-        .length - 1];
-    if (tagImpuestos != undefined) {
+    impTagPresent = xmlDoc2.getElementsByTagName("cfdi:Impuestos").length;
 
-        if (tagImpuestos.getAttribute("totalImpuestosTrasladados") != undefined) {
-            totalImpTrasImpuestos = tagImpuestos.getAttribute("totalImpuestosTrasladados");
+    rigthImpTag = xmlDoc2.getElementsByTagName("cfdi:Impuestos")[impTagPresent - 1];
+
+    if (rigthImpTag != undefined) {
+
+        if (rigthImpTag.getAttribute("totalImpuestosTrasladados") != undefined) {
+            totalImpTrasImpuestos = rigthImpTag.getAttribute("totalImpuestosTrasladados");
         } else {
-            totalImpTrasImpuestos = tagImpuestos.getAttribute("TotalImpuestosTrasladados");
+            totalImpTrasImpuestos = rigthImpTag.getAttribute("TotalImpuestosTrasladados");
         };
 
         totalImpTrasImpuestos = formatCurrency(totalImpTrasImpuestos);
 
     }
 
-    // for (var i = 0; i < xmlDoc2.getElementsByTagName("cfdi:Traslado").length; i++) {
+    tagImpuestosTras = rigthImpTag.getElementsByTagName("cfdi:Traslados")[0];
 
-    //   tagImpuestosTraslado = xmlDoc2.getElementsByTagName("cfdi:Traslado")[i];
-    //   if (tagImpuestosTraslado != undefined) {
+    if (tagImpuestosTras != undefined) {
+        impuestosTrasCount = tagImpuestosTras.children.length;
 
-    //     if (tagImpuestosTraslado.getAttribute("impuesto") != undefined) {
-    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("impuesto");
-    //     } else {
-    //       tipoImpIpuestosTraslado = tagImpuestosTraslado.getAttribute("Impuesto");
-    //     };
-    //     if (tagImpuestosTraslado.getAttribute("importe") != undefined) {
-    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("importe");
-    //     } else {
-    //       impoIpuestosTraslado = tagImpuestosTraslado.getAttribute("Importe");
-    //     };
+        totalIVA = 0;
 
-    //     console.log(tipoImpIpuestosTraslado);
-    //     console.log(">>" + impoIpuestosTraslado);
+        for (var i = 0; i < impuestosTrasCount; i++) {
+            var impTipo;
+            var impTrasladadoImp;
+            var impTrasladado;
 
-    //     $("#dataHolder").append("<b>IMPUESTO TIPO (" + tipoImpIpuestosTraslado +"):</b> " + impoIpuestosTraslado + "<br><br>");
-    //   }
+            impTrasladado = tagImpuestosTras.getElementsByTagName("cfdi:Traslado")[i];
+            impTipo = impTrasladado.getAttribute("Impuesto");
+            impTrasladadoImp = parseFloat(impTrasladado.getAttribute("Importe"));
 
-    // }
+
+            if (!impTipo) {
+                impTipo = impTrasladado.getAttribute("impuesto");
+                console.log("impuesto");
+            }
+            if (!impTrasladadoImp) {
+                impTrasladadoImp = parseFloat(impTrasladado.getAttribute("importe"));
+                console.log("importe");
+            }
+
+
+            if (impTipo == "002" || impTipo == "IVA") {
+                totalIVA = totalIVA + impTrasladadoImp;
+
+            }
+
+        }
+
+        totalIVA = formatCurrency(totalIVA);
+
+        if (totalIVA > totalImpTrasImpuestos) {
+            totalIVA = totalImpTrasImpuestos
+        } 
+
+    } else {
+        totalIVA = formatCurrency(0);
+
+    }
+
 
     $(".table > tbody").append(
         "<tr>" +
@@ -168,7 +193,7 @@ function findXMLElements(element) {
         "<td>" + claveCFDI + "</td>" +
         "<td></td>" +
         "<td>" + totalComprobante + "</td>" +
-        "<td></td>" +
+        "<td>" + totalIVA + "</td>" +
         "<td>" + totalImpTrasImpuestos + "</td>" +
         "<td></td>" +
         "<td></td>" +
