@@ -33,6 +33,10 @@ a:visited {
     border: 1px solid #343a40;
 }
 
+.mb-3 {
+    margin: 0;
+}
+
 
 /* ============================== JUMBOTRON */
 
@@ -111,6 +115,18 @@ td.selector {
     min-width: 70px;
     font-size: 8pt;
     word-break: break-all;
+}
+
+
+/* ============================== TABLE SPECIAL CELLS */
+
+.custom-select, .input-group, .input-group-append, .form-control, .input-group-text {
+    border: 1px solid white;
+    border-radius: 0;
+}
+
+.form-control, .input-group-text {
+    padding: 6px 2px;
 }
 
 

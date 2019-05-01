@@ -8,6 +8,8 @@ function grabElements() {
 
 };
 
+var fileCounter = 0;
+
 function process(element) {
 
     // Assign "files" the selected file in the input file selector.
@@ -30,7 +32,6 @@ function process(element) {
 };
 
 function findXMLElements(element) {
-
     // By passing the argument "element" (this name could be any name) to the function, we are capturing the element that called this function, which was the "Reader object" created in the "process" function. Then we can retrieve its properties and methods. In this case, we are assigning the "Reader objet" read as text file to the variable "response".
     var response = element.target.result;
 
@@ -49,6 +50,13 @@ function findXMLElements(element) {
     var metodoPagoComprobante;
     var formaPagoComprobante;
     var totalImpTrasImpuestos;
+
+    var montoBaseIVA;
+    var tasaIVA = 0.16;
+    var montoAntesImp;
+    var montoSinIVA;
+    var montoIVA0;
+    var otrosImp;
 
     // We'll search for the "cfdi:Emisor" through the "getElementsByTagName" method which retrieves an array, so we will take the first one of its elements.
     tagEmisor = xmlDoc2.getElementsByTagName("cfdi:Emisor")[0];
@@ -109,10 +117,6 @@ function findXMLElements(element) {
             formaPagoComprobante = tagComprobante.getAttribute("FormaPago");
         };
 
-        subtotalComprobante = formatCurrency(subtotalComprobante);
-        totalComprobante = formatCurrency(totalComprobante);
-        fecha = formatTime(fecha);
-
     }
 
 
@@ -127,8 +131,6 @@ function findXMLElements(element) {
         } else {
             totalImpTrasImpuestos = rigthImpTag.getAttribute("TotalImpuestosTrasladados");
         };
-
-        totalImpTrasImpuestos = formatCurrency(totalImpTrasImpuestos);
 
     }
 
@@ -151,11 +153,9 @@ function findXMLElements(element) {
 
             if (!impTipo) {
                 impTipo = impTrasladado.getAttribute("impuesto");
-                console.log("impuesto");
             }
             if (!impTrasladadoImp) {
                 impTrasladadoImp = parseFloat(impTrasladado.getAttribute("importe"));
-                console.log("importe");
             }
 
 
@@ -166,39 +166,146 @@ function findXMLElements(element) {
 
         }
 
-        totalIVA = formatCurrency(totalIVA);
-
         if (totalIVA > totalImpTrasImpuestos) {
             totalIVA = totalImpTrasImpuestos
-        } 
+        }
 
     } else {
-        totalIVA = formatCurrency(0);
+        totalIVA = 0;
+    }
 
+
+    if (totalComprobante == 0 || !totalComprobante) {
+        montoAntesImp = 0;
+    } else {
+        montoAntesImp = totalComprobante - totalImpTrasImpuestos;
+    }
+
+
+    if (totalComprobante == 0 || !totalComprobante) {
+        montoBaseIVA = 0;
+    } else if ((Math.abs(totalIVA) / tasaIVA) - montoAntesImp < 0.75) {
+        montoBaseIVA = montoAntesImp;
+    } else {
+        montoBaseIVA = totalIVA / 0.16;
+        console.log(totalIVA);
+        console.log(montoBaseIVA);
+    }
+
+
+    if (totalComprobante == 0 || !totalComprobante) {
+        montoSinIVA = 0;
+    } else {
+        montoSinIVA = totalComprobante - totalIVA;
+    }
+
+
+    if (totalComprobante == 0 || !totalComprobante) {
+        montoIVA0 = 0;
+    } else if (
+        totalComprobante - totalImpTrasImpuestos - montoBaseIVA < 0.75) {
+        montoIVA0 = 0;
+    } else {
+        montoIVA0 = totalComprobante - totalImpTrasImpuestos - montoBaseIVA;
+    }
+
+    if (totalComprobante == 0 || !totalComprobante) {
+        otrosImp = 0;
+    } else {
+        otrosImp = totalImpTrasImpuestos - totalIVA;
     }
 
 
     $(".table > tbody").append(
-        "<tr>" +
+        "<tr id='" + fileCounter + "'>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<select class='custom-select'" +
+        "id='" + fileCounter + "-inputGroupSelect01'>" +
+        "<option selected>Seleccionar</option>" +
+        "<option value='AUTOMOVIL'>AUTOMÓVIL</option>" +
+        "<option value='ELECTRONICOS'>ELECTRÓNICOS</option>" +
+        "<option value='GASOLINA'>GASOLINA</option>" +
+        "<option value='OFICINA'>OFICINA</option>" +
+        "<option value='OBRA'>OBRA</option>" +
+        "<option value='GASTOS_MEDICOS'>GASTOS MÉDICOS</option>" +
+        "<option value='REPRESENTACION'>REPRESENTACIÓN</option>" +
+        "<option value='SEGUROS'>SEGUROS</option>" +
+        "<option value='CONSUMOS'>CONSUMOS</option>" +
+        "<option value='PAQUETERIA'>PAQUETERÍA</option>" +
+        "<option value='INTERESES'>INTERESES</option>" +
+        "<option value='VIATICOS'>VIÁTICOS</option>" +
+        "<option value='SOFTWARE'>SOFTWARE</option>" +
+        "<option value='TELEFONIA'>TELEFONÍA</option>" +
+        "<option value='DIVERSOS'>DIVERSOS</option>" +
+        "</select>" +
+        "</div>" +
+        "</td>" +
         "<td></td>" +
         "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<select class='custom-select'" +
+        "id='" + fileCounter + "-inputGroupSelect02'>" +
+        "<option selected value='SI'>SÍ</option>" +
+        "<option value='NO'>NO</option>" +
+        "</select>" +
+        "</div>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<select class='custom-select'" +
+        "id='" + fileCounter + "-inputGroupSelect03'>" +
+        "<option selected>Seleccionar</option>" +
+        "<option value='MENSUAL'>MENSUAL</option>" +
+        "<option value='ANUAL'>ANUAL</option>" +
+        "<option value='POR_DEPRECIACION'>POR DEPRECIACIÓN</option>" +
+        "<option value='NINGUNO'>NINGUNO</option>" +
+        "</select>" +
+        "</div>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<select class='custom-select'" +
+        "id='" + fileCounter + "-inputGroupSelect04'>" +
+        "<option selected>Seleccionar</option>" +
+        "<option value='BIENES'>BIENES</option>" +
+        "<option value='SERVICIOS'>SERVICIOS</option>" +
+        "</select>" +
+        "</div>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<select class='custom-select'" +
+        "id='" + fileCounter + "-inputGroupSelect05'>" +
+        "<option selected>Seleccionar</option>" +
+        "<option value='SI'>SÍ</option>" +
+        "<option value='NO'>NO</option>" +
+        "</select>" +
+        "</div>" +
+        "</td>" +
         "<td>" + nombreEmisor + "</td>" +
         "<td>" + rfcEmisor + "</td>" +
-        "<td>" + fecha + "</td>" +
+        "<td>" + formatTime(fecha) + "</td>" +
         "<td>" + claveCFDI + "</td>" +
-        "<td></td>" +
-        "<td>" + totalComprobante + "</td>" +
-        "<td>" + totalIVA + "</td>" +
-        "<td>" + totalImpTrasImpuestos + "</td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
+        "<td style='padding:0px'>" +
+        "<div class='input-group mb-3'>" +
+        "<input type='text' class='form-control' " +
+        "id='" + fileCounter + "-inputGroupSelect06' " +
+        "ref='' " +
+        "aria-label='%Deductible'> " +
+        "<div class='input-group-append'>" +
+        "<span class='input-group-text'>%</span>" +
+        "</div>" +
+        "</div>" +
+        "</td>" +
+        "<td>" + formatCurrency(totalComprobante) + "</td>" +
+        "<td>" + formatCurrency(totalIVA) + "</td>" +
+        "<td>" + formatCurrency(totalImpTrasImpuestos) + "</td>" +
+        "<td>" + formatCurrency(montoBaseIVA) + "</td>" +
+        "<td>" + formatCurrency(montoSinIVA) + "</td>" +
+        "<td>" + formatCurrency(montoAntesImp) + "</td>" +
+        "<td>" + formatCurrency(montoIVA0) + "</td>" +
         "<td></td>" +
         "<td></td>" +
         "<td></td>" +
@@ -208,6 +315,8 @@ function findXMLElements(element) {
         "<td></td>" +
         "</tr>"
     );
+
+    fileCounter++;
 
 }
 
