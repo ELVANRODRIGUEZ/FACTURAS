@@ -315,7 +315,7 @@ function findXMLElements(element) {
         "<td></td>" +
         "<td></td>" +
         "<td></td>" +
-        "<td>" + formaPagoComprobante + "</td>" +
+        "<td>" + metodoPagoComprobante + "</td>" +
         "<td></td>" +
         "</tr>"
     );
