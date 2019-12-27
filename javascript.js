@@ -217,8 +217,8 @@ function findXMLElements(element) {
 
 
     $(".table > tbody").append(
-        // "<tr id='" + fileCounter + "'>" +
-        // "<td style='padding:0px'>" +
+        "<tr id='" + fileCounter + "'>" +
+        "<td style='padding:0px'>" +
         // "<div class='input-group mb-3'>" +
         // "<select class='custom-select'" +
         // "id='" + fileCounter + "-inputGroupSelect01'>" +
@@ -240,10 +240,10 @@ function findXMLElements(element) {
         // "<option value='DIVERSOS'>DIVERSOS</option>" +
         // "</select>" +
         // "</div>" +
-        // "</td>" +
-        // "<td></td>" +
-        // "<td></td>" +
-        // "<td style='padding:0px'>" +
+        "</td>" +
+        "<td></td>" +
+        "<td></td>" +
+        "<td style='padding:0px'>" +
         // "<div class='input-group mb-3'>" +
         // "<select class='custom-select'" +
         // "id='" + fileCounter + "-inputGroupSelect02'>" +
@@ -251,8 +251,8 @@ function findXMLElements(element) {
         // "<option value='NO'>NO</option>" +
         // "</select>" +
         // "</div>" +
-        // "</td>" +
-        // "<td style='padding:0px'>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
         // "<div class='input-group mb-3'>" +
         // "<select class='custom-select'" +
         // "id='" + fileCounter + "-inputGroupSelect03'>" +
@@ -263,8 +263,8 @@ function findXMLElements(element) {
         // "<option value='NINGUNO'>NINGUNO</option>" +
         // "</select>" +
         // "</div>" +
-        // "</td>" +
-        // "<td style='padding:0px'>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
         // "<div class='input-group mb-3'>" +
         // "<select class='custom-select'" +
         // "id='" + fileCounter + "-inputGroupSelect04'>" +
@@ -273,8 +273,8 @@ function findXMLElements(element) {
         // "<option value='SERVICIOS'>SERVICIOS</option>" +
         // "</select>" +
         // "</div>" +
-        // "</td>" +
-        // "<td style='padding:0px'>" +
+        "</td>" +
+        "<td style='padding:0px'>" +
         // "<div class='input-group mb-3'>" +
         // "<select class='custom-select'" +
         // "id='" + fileCounter + "-inputGroupSelect05'>" +
@@ -283,21 +283,21 @@ function findXMLElements(element) {
         // "<option value='NO'>NO</option>" +
         // "</select>" +
         // "</div>" +
-        // "</td>" +
+        "</td>" +
         "<td>" + nombreEmisor + "</td>" +
         "<td>" + rfcEmisor + "</td>" +
         "<td>" + formatTime(fecha) + "</td>" +
         "<td>" + claveCFDI + "</td>" +
         "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<input type='text' class='form-control' " +
-        "id='" + fileCounter + "-inputGroupSelect06' " +
-        "ref='' " +
-        "aria-label='%Deductible'> " +
-        "<div class='input-group-append'>" +
-        "<span class='input-group-text'>%</span>" +
-        "</div>" +
-        "</div>" +
+        // "<div class='input-group mb-3'>" +
+        // "<input type='text' class='form-control' " +
+        // "id='" + fileCounter + "-inputGroupSelect06' " +
+        // "ref='' " +
+        // "aria-label='%Deductible'> " +
+        // "<div class='input-group-append'>" +
+        // "<span class='input-group-text'>%</span>" +
+        // "</div>" +
+        // "</div>" +
         "</td>" +
         "<td>" + formatCurrency(totalComprobante) + "</td>" +
         "<td>" + formatCurrency(totalIVA) + "</td>" +
