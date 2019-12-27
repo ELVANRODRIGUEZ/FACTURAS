@@ -217,73 +217,73 @@ function findXMLElements(element) {
 
 
     $(".table > tbody").append(
-        "<tr id='" + fileCounter + "'>" +
-        "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<select class='custom-select'" +
-        "id='" + fileCounter + "-inputGroupSelect01'>" +
-        "<option selected>Seleccionar</option>" +
-        "<option value='AUTOMOVIL'>AUTOMÓVIL</option>" +
-        "<option value='ELECTRONICOS'>ELECTRÓNICOS</option>" +
-        "<option value='GASOLINA'>GASOLINA</option>" +
-        "<option value='OFICINA'>OFICINA</option>" +
-        "<option value='OBRA'>OBRA</option>" +
-        "<option value='GASTOS_MEDICOS'>GASTOS MÉDICOS</option>" +
-        "<option value='REPRESENTACION'>REPRESENTACIÓN</option>" +
-        "<option value='SEGUROS'>SEGUROS</option>" +
-        "<option value='CONSUMOS'>CONSUMOS</option>" +
-        "<option value='PAQUETERIA'>PAQUETERÍA</option>" +
-        "<option value='INTERESES'>INTERESES</option>" +
-        "<option value='VIATICOS'>VIÁTICOS</option>" +
-        "<option value='SOFTWARE'>SOFTWARE</option>" +
-        "<option value='TELEFONIA'>TELEFONÍA</option>" +
-        "<option value='DIVERSOS'>DIVERSOS</option>" +
-        "</select>" +
-        "</div>" +
-        "</td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<select class='custom-select'" +
-        "id='" + fileCounter + "-inputGroupSelect02'>" +
-        "<option selected value='SI'>SÍ</option>" +
-        "<option value='NO'>NO</option>" +
-        "</select>" +
-        "</div>" +
-        "</td>" +
-        "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<select class='custom-select'" +
-        "id='" + fileCounter + "-inputGroupSelect03'>" +
-        "<option selected>Seleccionar</option>" +
-        "<option value='MENSUAL'>MENSUAL</option>" +
-        "<option value='ANUAL'>ANUAL</option>" +
-        "<option value='POR_DEPRECIACION'>POR DEPRECIACIÓN</option>" +
-        "<option value='NINGUNO'>NINGUNO</option>" +
-        "</select>" +
-        "</div>" +
-        "</td>" +
-        "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<select class='custom-select'" +
-        "id='" + fileCounter + "-inputGroupSelect04'>" +
-        "<option selected>Seleccionar</option>" +
-        "<option value='BIENES'>BIENES</option>" +
-        "<option value='SERVICIOS'>SERVICIOS</option>" +
-        "</select>" +
-        "</div>" +
-        "</td>" +
-        "<td style='padding:0px'>" +
-        "<div class='input-group mb-3'>" +
-        "<select class='custom-select'" +
-        "id='" + fileCounter + "-inputGroupSelect05'>" +
-        "<option selected>Seleccionar</option>" +
-        "<option value='SI'>SÍ</option>" +
-        "<option value='NO'>NO</option>" +
-        "</select>" +
-        "</div>" +
-        "</td>" +
+        // "<tr id='" + fileCounter + "'>" +
+        // "<td style='padding:0px'>" +
+        // "<div class='input-group mb-3'>" +
+        // "<select class='custom-select'" +
+        // "id='" + fileCounter + "-inputGroupSelect01'>" +
+        // "<option selected>Seleccionar</option>" +
+        // "<option value='AUTOMOVIL'>AUTOMÓVIL</option>" +
+        // "<option value='ELECTRONICOS'>ELECTRÓNICOS</option>" +
+        // "<option value='GASOLINA'>GASOLINA</option>" +
+        // "<option value='OFICINA'>OFICINA</option>" +
+        // "<option value='OBRA'>OBRA</option>" +
+        // "<option value='GASTOS_MEDICOS'>GASTOS MÉDICOS</option>" +
+        // "<option value='REPRESENTACION'>REPRESENTACIÓN</option>" +
+        // "<option value='SEGUROS'>SEGUROS</option>" +
+        // "<option value='CONSUMOS'>CONSUMOS</option>" +
+        // "<option value='PAQUETERIA'>PAQUETERÍA</option>" +
+        // "<option value='INTERESES'>INTERESES</option>" +
+        // "<option value='VIATICOS'>VIÁTICOS</option>" +
+        // "<option value='SOFTWARE'>SOFTWARE</option>" +
+        // "<option value='TELEFONIA'>TELEFONÍA</option>" +
+        // "<option value='DIVERSOS'>DIVERSOS</option>" +
+        // "</select>" +
+        // "</div>" +
+        // "</td>" +
+        // "<td></td>" +
+        // "<td></td>" +
+        // "<td style='padding:0px'>" +
+        // "<div class='input-group mb-3'>" +
+        // "<select class='custom-select'" +
+        // "id='" + fileCounter + "-inputGroupSelect02'>" +
+        // "<option selected value='SI'>SÍ</option>" +
+        // "<option value='NO'>NO</option>" +
+        // "</select>" +
+        // "</div>" +
+        // "</td>" +
+        // "<td style='padding:0px'>" +
+        // "<div class='input-group mb-3'>" +
+        // "<select class='custom-select'" +
+        // "id='" + fileCounter + "-inputGroupSelect03'>" +
+        // "<option selected>Seleccionar</option>" +
+        // "<option value='MENSUAL'>MENSUAL</option>" +
+        // "<option value='ANUAL'>ANUAL</option>" +
+        // "<option value='POR_DEPRECIACION'>POR DEPRECIACIÓN</option>" +
+        // "<option value='NINGUNO'>NINGUNO</option>" +
+        // "</select>" +
+        // "</div>" +
+        // "</td>" +
+        // "<td style='padding:0px'>" +
+        // "<div class='input-group mb-3'>" +
+        // "<select class='custom-select'" +
+        // "id='" + fileCounter + "-inputGroupSelect04'>" +
+        // "<option selected>Seleccionar</option>" +
+        // "<option value='BIENES'>BIENES</option>" +
+        // "<option value='SERVICIOS'>SERVICIOS</option>" +
+        // "</select>" +
+        // "</div>" +
+        // "</td>" +
+        // "<td style='padding:0px'>" +
+        // "<div class='input-group mb-3'>" +
+        // "<select class='custom-select'" +
+        // "id='" + fileCounter + "-inputGroupSelect05'>" +
+        // "<option selected>Seleccionar</option>" +
+        // "<option value='SI'>SÍ</option>" +
+        // "<option value='NO'>NO</option>" +
+        // "</select>" +
+        // "</div>" +
+        // "</td>" +
         "<td>" + nombreEmisor + "</td>" +
         "<td>" + rfcEmisor + "</td>" +
         "<td>" + formatTime(fecha) + "</td>" +
@@ -302,10 +302,14 @@ function findXMLElements(element) {
         "<td>" + formatCurrency(totalComprobante) + "</td>" +
         "<td>" + formatCurrency(totalIVA) + "</td>" +
         "<td>" + formatCurrency(totalImpTrasImpuestos) + "</td>" +
-        "<td>" + formatCurrency(montoBaseIVA) + "</td>" +
-        "<td>" + formatCurrency(montoSinIVA) + "</td>" +
-        "<td>" + formatCurrency(montoAntesImp) + "</td>" +
-        "<td>" + formatCurrency(montoIVA0) + "</td>" +
+        // "<td>" + formatCurrency(montoBaseIVA) + "</td>" +
+        "<td></td>" +
+        // "<td>" + formatCurrency(montoSinIVA) + "</td>" +
+        // "<td>" + formatCurrency(montoAntesImp) + "</td>" +
+        // "<td>" + formatCurrency(montoIVA0) + "</td>" +
+        "<td></td>" +
+        "<td></td>" +
+        "<td></td>" +
         "<td></td>" +
         "<td></td>" +
         "<td></td>" +
