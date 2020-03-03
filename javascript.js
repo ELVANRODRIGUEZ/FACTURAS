@@ -210,8 +210,8 @@ function findXMLElements(element) {
     otrosImp = parseFloat(0);
   }
 
-  $(".table > tbody").append(
-    "<tr id='" +
+  $("#tableBody").append(
+    "<tr id='rowNumber" +
       fileCounter +
       "'>" +
       "<td style='padding:0px'>" +
@@ -351,3 +351,41 @@ function formatTime(time) {
   time = moment(time).format("MM/DD/YYYY");
   return time;
 }
+
+// *******************
+
+function s2ab(s) {
+  var buf = new ArrayBuffer(s.length);
+  var view = new Uint8Array(buf);
+  for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+  return buf;
+}
+$("#genExcl").click(function() {
+  var wb = XLSX.utils.table_to_book(document.getElementById("tableRow"), {
+    sheet: "Sheet JS"
+  });
+  var wbout = XLSX.write(wb, {
+    bookType: "xlsx",
+    bookSST: true,
+    type: "binary"
+  });
+  saveAs(
+    new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
+    "test.xlsx"
+  );
+});
+
+// *******************
+
+// $("#genExcl").click(genExcel());
+
+// var $test = $("#mainDescription").html();
+
+// $("#genExcl").on("click", function() {
+//   var $test = $("#rowNumber2").html();
+//   console.log($test);
+// });
+
+// function genExcel() {
+//   console.log("Working!");
+// }

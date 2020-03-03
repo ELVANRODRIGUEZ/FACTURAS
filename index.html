@@ -8,7 +8,12 @@
 
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+  
+  <!-- SheetJs -->
+  <script lang=javascritp src="xlsx.full.min.js"></script>
+  <!-- FileSaver -->
+  <script lang=javascritp src="FileSaver.min.js"></script>
+  
   <!-- Link to BOOTSTRAP. -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -53,11 +58,12 @@
 
     <!-- ==================================================== TABLE TITLE -->
 
-    <div id="tableRow" class="row">
+    <div class="row">
       <div class="col-lg-12">
         <div class="card card-default">
-          <div class="card-header">
-            <h5>DESCRIPCIÓN DE FACTURAS</h5>
+          <div id="mainDescription" class="card-header">
+            <h5 >DESCRIPCIÓN DE FACTURAS</h5>
+            <h5 >PRUEBA DESCRIPCIÓN DE FACTURAS</h5>
             <div class="input-group mb-3">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="pickedFile" aria-describedby="inputGroupFileAddon01"
@@ -70,7 +76,7 @@
           <!-- ==================================================== TABLE -->
 
           <div class="card-body tableDiv">
-            <table class="table">
+            <table id="tableRow" class="table">
               <thead>
                 <tr>
                   <th id="categoría" scope="col">Categoría</th>
@@ -101,13 +107,17 @@
                   <th id="Notas" scope="col">Notas</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="tableBody">
+                <!-- <h5>Prueba</h5>> -->
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+
+    <button type="button" id="genExcl" class="btn btn-dark">Generar Excel</button>
+
 </body>
 
 <!-- Robust JQuery version -->
